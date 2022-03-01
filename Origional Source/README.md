@@ -1,6 +1,6 @@
 # Sofar2mqtt
 ## A smart home interface for Sofar solar and battery inverters.
-
+Forked to add support for the ESP32 and to compile in PlatformIO - Estimated April 2022 before I'll get any code commited. 
 Supported models:  
 
 ME3000SP - Full support  
