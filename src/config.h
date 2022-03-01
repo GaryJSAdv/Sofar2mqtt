@@ -1,36 +1,29 @@
-// config: ////////////////////////////////////////////////////////////
-// 
-//#define BLUETOOTH
-#define OTA_HANDLER 
-//#define MODE_AP // phone connects directly to ESP
-#define MODE_STA
 
 
-#define PROTOCOL_TCP
+#ifndef configh
+#define configh
 
-bool debug = true;
 
-#define VERSION "1.10"
 
-// For AP mode:
-const char *ssid = "Home21";  // You will connect your phone to this Access Point
-const char *pw = "12Feb2011"; // and this is the password
-//IPAddress ip(192, 168, 4, 1); // From RoboRemo app, connect to this IP
-//IPAddress netmask(255, 255, 255, 0);
 
-// You must connect the phone to this AP, then:
-// menu -> connect -> Internet(TCP) -> 192.168.4.1:8880  for UART0
-//                                  -> 192.168.4.1:8881  for UART1
-//                                  -> 192.168.4.1:8882  for UART2
+#define wifi_ssid  "Home21"  // You will connect your phone to this Access Point
+#define wifi_pw    "12Feb2011" // and this is the password
+
+//The divice name is used as the MQTT base topic. If you need more than one Sofar2mqtt on your network, give them unique names.
+#define deviceName "Sofar2mqtt"
+#define VERSION    "1.00"
 
 
 #define LED_BUILTIN 2
-#define RE_CONTROL  23
 
 
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
-#define NUMBER_OF_COMM_PORTS   3                 // total number of COM Ports
-#define RS485_PORT             1
+
+#define RS485_SERIAL_CHANNEL   1
+#define SERIAL_COMMUNICATION_CONTROL_PIN 4 // Transmission set pin
+#define RE_CONTROL  23 //rx485 re pin. Inverted signal. 
 
 #define DEBUG_COM 0                 // debug output to COM0
 /*************************  COM Port 0 *******************************/
@@ -44,14 +37,12 @@ const char *pw = "12Feb2011"; // and this is the password
 #define SERIAL_PARAM1 SERIAL_8N1    // Data/Parity/Stop UART1
 #define SERIAL1_RXPIN 16            // receive Pin UART1
 #define SERIAL1_TXPIN 17            // transmit Pin UART1
-#define SERIAL1_TCP_PORT 8881       // Wifi Port UART1
 /*************************  COM Port 2 *******************************/
 #define UART_BAUD2 19200            // Baudrate UART2
 #define SERIAL_PARAM2 SERIAL_8N1    // Data/Parity/Stop UART2
 #define SERIAL2_RXPIN 15            // receive Pin UART2
 #define SERIAL2_TXPIN 4             // transmit Pin UART2
-#define SERIAL2_TCP_PORT 8882       // Wifi Port UART2
 
-#define BUFFER_SIZE 1024
 
 //////////////////////////////////////////////////////////////////////////
+#endif
