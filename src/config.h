@@ -5,9 +5,10 @@
 
 
 
-
-#define wifi_ssid  "Home21"  // You will connect your phone to this Access Point
-#define wifi_pw    "12Feb2011" // and this is the password
+#ifndef wifi_ssid
+#define wifi_ssid  "SSID"  // You will connect your phone to this Access Point
+#define wifi_pw    "PW" // and this is the password
+#endif
 
 //The divice name is used as the MQTT base topic. If you need more than one Sofar2mqtt on your network, give them unique names.
 #define deviceName "Sofar2mqtt"
@@ -16,6 +17,10 @@
 
 #define LED_BUILTIN 2
 
+#define DISP_SSD1306 1
+#define DISP_SH1106 2
+//#define DISPLAY_TYPE DISP_SSD1306
+#define DISPLAY_TYPE  DISP_SH1106
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels

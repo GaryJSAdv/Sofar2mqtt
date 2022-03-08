@@ -2,11 +2,22 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 #include "config.h"
 
-#define OLED_RESET -1  
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+	
+
+#define OLED_RESET -1  	
+
+#if (DISPLAY_TYPE==DISP_SSD1306)
+  #include <Adafruit_SSD1306.h>
+  #define DISPLAY_POWER SSD1306_SWITCHCAPVCC
+  Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+#elif (DISPLAY_TYPE==DISP_SH1106)
+#include "Adafruit_SH1106.h"
+  #define DISPLAY_POWER SH1106_SWITCHCAPVCC
+  Adafruit_SH1106 display(OLED_RESET);
+#endif
+
 
 // Update the OLED. Use "NULL" for no change or "" for an empty line.
 String oledLine1;
@@ -68,7 +79,7 @@ void updateOLED(String line1, String line2, String line3, String line4)
 void InitOledDisplay (void)
 {
 	//Turn on the OLED
-	display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize OLED with the I2C addr 0x3C (for the 64x48)
+	display.begin(DISPLAY_POWER, 0x3C);  // initialize OLED with the I2C addr 0x3C (for the 64x48)
 	display.clearDisplay();
 	display.display();
 	updateOLED(deviceName, "connecting", "", VERSION);
