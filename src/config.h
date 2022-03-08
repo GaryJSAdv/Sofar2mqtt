@@ -3,11 +3,11 @@
 #ifndef configh
 #define configh
 
-
+#include "my_details.h"
 
 #ifndef wifi_ssid
 #define wifi_ssid  "SSID"  // You will connect your phone to this Access Point
-#define wifi_pw    "PW" // and this is the password
+#define wifi_pw    "PASSWORD" // and this is the password
 #endif
 
 //The divice name is used as the MQTT base topic. If you need more than one Sofar2mqtt on your network, give them unique names.
