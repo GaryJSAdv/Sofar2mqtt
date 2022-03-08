@@ -3,6 +3,7 @@
 #include "sofar_modbus.h"
 #include "sofar_mqtt.h"
 #include "HardwareSerial.h"
+#include "globals.h"
 
 #include "config.h"
 
@@ -194,6 +195,9 @@ TModbusResponce ret;
 }
 
 
+TSysStatus sys_status;
+
+
 void sendData()
 {
 	// Update all parameters and send to MQTT.
@@ -239,6 +243,7 @@ void sendData()
 			unsigned int e = ((bp.data[0] << 8) | bp.data[1]);
 			if (!( state == "{")) { state += ","; }
 			state += "\"battery_power\":"+String(e);
+			sys_status.battery_power = e;
 		}
 		
 		TModbusResponce bv = sendModbus(getBatteryVoltage, sizeof(getBatteryVoltage));
@@ -263,6 +268,7 @@ void sendData()
 			unsigned int h = ((bs.data[0] << 8) | bs.data[1]);
 			if (!( state == "{")) { state += ","; }
 			state += "\"batterySOC\":"+String(h);
+			sys_status.battery_charge = h;
 		}
 
 		TModbusResponce bt = sendModbus(getBatteryTemperature, sizeof(getBatteryTemperature));
@@ -287,6 +293,7 @@ void sendData()
 			unsigned int k = ((gp.data[0] << 8) | gp.data[1]);
 			if (!( state == "{")) { state += ","; }
 			state += "\"grid_power\":"+String(k);
+			sys_status.grid_power = k;
 		}
 
 		TModbusResponce lp = sendModbus(getLoadPower, sizeof(getLoadPower));
@@ -303,6 +310,7 @@ void sendData()
 			unsigned int m = ((sp.data[0] << 8) | sp.data[1]);
 			if (!( state == "{")) { state += ","; }
 			state += "\"solarPV\":"+String(m);
+			sys_status.solar_power = m;
 		}
 
 		TModbusResponce st = sendModbus(getSolarPVToday, sizeof(getSolarPVToday));

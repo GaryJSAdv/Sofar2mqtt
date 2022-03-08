@@ -2,6 +2,7 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
+#include "globals.h"
 #include "config.h"
 
 	
@@ -37,10 +38,13 @@ void updateOLED(String line1, String line2, String line3, String line4)
 	{
 		display.println(line1);
 		oledLine1 = line1;
+		display.drawFastHLine(0,9,128, WHITE);
 	}
 	else 
 	{
 		display.println(oledLine1);
+		display.drawFastHLine(0,9,128, WHITE);
+
 	}
 	display.setCursor(0,12);
 	if (line2 != "NULL") 
@@ -72,6 +76,62 @@ void updateOLED(String line1, String line2, String line3, String line4)
 	{
 		display.println(oledLine4);
 	}
+
+    //status area
+    
+
+const uint8_t battery_bmp[] = {0xFF,0xFF,0xFC,
+	                         0xFF,0xFF,0xFC,
+							 0xFF,0xFF,0xFF,
+							 0xFF,0xFF,0xFF,
+							 0xFF,0xFF,0xFF,
+							 0xFF,0xFF,0xFF,
+							 0xFF,0xFF,0xFF,
+							 0xFF,0xFF,0xFC,
+							 0xFF,0xFF,0xFC};
+
+const uint8_t grid_bmp[] = {
+  0x10, 
+  0x38, 
+  0xfe, 
+  0x38, 
+  0x7c, 
+  0xfe, 
+  0x38, 
+  0x38, 
+  0x6c, 
+  0x44, 
+  0x82, 
+};
+
+const uint8_t solar_bmp[] = {0xF9,0x9F,
+	                         0xF9,0x9F,
+							 0xF9,0x9F,
+							 0x00,0x00,
+							 0xF9,0x9F,
+							 0xF9,0x9F,
+							 0x00,0x00,
+							 0xF9,0x9F,
+							 0xF9,0x9F,
+							 0xF9,0x9F};
+
+
+
+	display.drawBitmap (70,17, battery_bmp, 24, 9, WHITE);
+	display.setCursor(100,12);
+	display.println(String(sys_status.battery_charge)+"%");
+	display.setCursor(100,24);
+	display.println(String(sys_status.battery_power)+"W");
+
+
+	display.setCursor(100,36);
+	display.drawBitmap(75,34, solar_bmp, 16, 10, WHITE);
+	display.println(String(sys_status.solar_power)+"W");
+
+	display.setCursor(100,48);
+	display.drawBitmap (80,46, grid_bmp, 7, 11, WHITE);
+	display.println(String(sys_status.grid_power)+"W");
+
 	display.display();
 }
 
