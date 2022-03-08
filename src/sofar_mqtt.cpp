@@ -8,12 +8,35 @@
 PubSubClient mqtt(wifi);
 
 
-void InitMqtt (void)
+
+void CheckMqttConnected (void)
 {
+	if (!mqtt.connected())
+	{
+		updateOLED("NULL", "Offline", "NULL", "NULL");
+		mqttReconnect();
+	}
+	else
+	{
+		updateOLED("NULL", "Online", "NULL", "NULL");
+	}
 
 }
 
-
+void CheckForNewMqttMessages(void)
+{
+	if(!mqtt.loop()) 
+	{
+		if (mqttUsername != "")
+		{
+		  mqtt.connect(mqttClientID, mqttUsername, mqttPassword);
+		}
+		else
+		{
+			mqtt.connect(mqttClientID);
+		}
+	}
+}
 
 // This function is executed when an MQTT message arrives on a topic that we are subscribed to.
 void mqttCallback(String topic, byte* message, unsigned int length) 
@@ -166,4 +189,10 @@ void sendMqtt(char* topic, String msg_str)
 		Serial.println("MQTT publish failed");
 	}	
 	
+}
+
+void InitMqtt (void)
+{
+	mqtt.setServer(mqttServer, mqttPort);
+	mqtt.setCallback(mqttCallback);
 }

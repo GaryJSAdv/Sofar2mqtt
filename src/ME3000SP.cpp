@@ -285,8 +285,7 @@ void setup()
 
 	setup_wifi();
 	
-	/*mqtt.setServer(mqttServer, mqttPort);
-	mqtt.setCallback(mqttCallback);*/
+	InitMqtt ();
 	
 	//Wake up the inverter and put it in auto mode to begin with.
 	heartbeat();
@@ -297,19 +296,10 @@ void setup()
 void loop()
 {
 	//make sure mqtt is still connected
-	/*if (!mqtt.connected()) {
-		updateOLED("NULL", "Offline", "NULL", "NULL");
-		mqttReconnect();
-	}
-	else
-	{
-		updateOLED("NULL", "Online", "NULL", "NULL");
-	}
+	CheckMqttConnected ();
 	
 	//check mqtt for incomming messages
-	if(!mqtt.loop()) {
-		mqtt.connect(mqttClientID, mqttUsername, mqttPassword);
-	}*/
+	CheckForNewMqttMessages();
 	
 	//Send a heartbaet to keep the inverter awake
 	heartbeat();
